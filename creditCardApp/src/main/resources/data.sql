@@ -1,0 +1,2 @@
+INSERT INTO CREDIT_CARD (card_number, given_name, card_limit, card_balance) VALUES ('1111222233334444', 'Alice', 2000, -1045);
+INSERT INTO CREDIT_CARD (card_number, given_name, card_limit, card_balance) VALUES ('4444333322221111', 'Bob', 5000, 10.24);
