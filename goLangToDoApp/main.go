@@ -14,7 +14,6 @@ type ToDoItem struct {
 	ItemId      int    `json:"id"`
 	Header      string `json:"header"`
 	Description string `json:"description"`
-	DueDate     string `json:"dueDate"`
 }
 
 func main() {
@@ -30,36 +29,38 @@ func main() {
 	id := flag.Int("id", 0, "ID of Item in To-Do List")
 	header := flag.String("header", "", "Header")
 	desc := flag.String("desc", "", "Description")
-	due := flag.String("due", "", "Due date")
 
 	flag.Parse()
 
 	// Load All To Do Items from file
-	//items := PrintAllToDoItems(fileName)
-	//if items == nil {
-	//	fmt.Println("============================== No To-Do Items in the List =================================")
-	//}
-
 	items := GetAllToDoItems(fileName)
+	if items == nil {
+		fmt.Println("============================== No To-Do Items in the List =================================")
+	}
 
+	// List
 	if *list {
-		PrintAllToDoItems(fileName)
+		PrintToDoItems(items)
 	}
 
 	if *add {
-		items = AddNewToDoItem(items, *header, *desc, *due)
+		items = AddNewToDoItem(items, *header, *desc)
+		fmt.Println("=========================== New To-Do Item added to the List ==============================")
 	}
 
 	if *update && *id != 0 {
-		items = UpdateToDoItem(items, ToDoItem{*id, *header, *desc, *due})
+		items = UpdateToDoItem(items, ToDoItem{*id, *header, *desc})
+		fmt.Println("================================== To-Do Item updated ====================================")
 	}
 
 	if *remove && *id != 0 {
 		items = RemoveToDoItem(items, *id)
+		fmt.Println("=================================== To-Do Item removed ====================================")
 	}
 
 	if *removeAll {
 		items = nil
+		fmt.Println("================================ All To-Do Item(s) removed ================================")
 	}
 
 	// Save All To Do Items to file
@@ -71,27 +72,12 @@ func main() {
 
 func PrintFlagInstructions() {
 	fmt.Println("======================== Use following flags for various operations =======================")
-	fmt.Println("-add -header=<name> -desc <description> -due <dueDate> to \"Add a new To-Do Item\"")
-	fmt.Println("-update -id=<itemId> -header=<name> -desc <description> -due <dueDate> to \"Update a To-Do Item\"")
+	fmt.Println("-add -header=<name> -desc <description> to \"Add a new To-Do Item\"")
+	fmt.Println("-update -id=<itemId> -header=<name> -desc <description> to \"Update a To-Do Item\"")
 	fmt.Println("-remove -id=<itemId> to \"Delete a To-Do Item\"")
 	fmt.Println("-removeAll to \"Delete all To-Do Items\"")
 	fmt.Println("-list to \"Print all To-Do Items in the List\"")
 	fmt.Println("===========================================================================================")
-}
-
-func PrintAllToDoItems(fileName string) []ToDoItem {
-	// Open json file
-	byteValue := OpenToDoItemsFile(fileName)
-	if byteValue != nil {
-		// Parse the json file to ToDoItems
-		items := UnMarshalToDoItems(byteValue)
-		if items != nil {
-			// Print To Do List Items
-			PrintToDoItems(items)
-			return items
-		}
-	}
-	return nil
 }
 
 func GetAllToDoItems(fileName string) []ToDoItem {
@@ -116,13 +102,13 @@ func SaveAllToDoItems(allItems []ToDoItem) error {
 	return ioutil.WriteFile(fileName, data, 0644)
 }
 
-func AddNewToDoItem(currentItems []ToDoItem, header string, desc string, dueDate string) []ToDoItem {
+func AddNewToDoItem(currentItems []ToDoItem, header string, desc string) []ToDoItem {
 	id := 1
 	itemNos := len(currentItems)
 	if itemNos > 0 {
 		id = currentItems[itemNos-1].ItemId + 1
 	}
-	return append(currentItems, ToDoItem{id, header, desc, dueDate})
+	return append(currentItems, ToDoItem{id, header, desc})
 }
 
 func UpdateToDoItem(currentItems []ToDoItem, updateItem ToDoItem) []ToDoItem {
@@ -130,7 +116,6 @@ func UpdateToDoItem(currentItems []ToDoItem, updateItem ToDoItem) []ToDoItem {
 		if item.ItemId == updateItem.ItemId {
 			currentItems[index].Header = updateItem.Header
 			currentItems[index].Description = updateItem.Description
-			currentItems[index].DueDate = updateItem.DueDate
 		}
 	}
 	return currentItems
@@ -181,7 +166,6 @@ func PrintToDoItems(items []ToDoItem) {
 		}
 		fmt.Printf("%d. %s\n", item.ItemId, item.Header)
 		fmt.Println(item.Description)
-		fmt.Println("Complete by", item.DueDate)
 	}
 	fmt.Println("===========================================================================================")
 }
