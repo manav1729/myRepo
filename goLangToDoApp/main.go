@@ -40,7 +40,9 @@ func main() {
 
 	// List
 	if *list {
-		PrintToDoItems(items)
+		if items != nil {
+			PrintToDoItems(items)
+		}
 	}
 
 	if *add {
