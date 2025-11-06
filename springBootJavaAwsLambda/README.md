@@ -1,5 +1,5 @@
-# SpringBootAwsServerless serverless API
-The SpringBootAwsServerless project, created with [`aws-serverless-java-container`](https://github.com/aws/serverless-java-container).
+# springBootJavaAwsLambda serverless API
+The springBootJavaAwsLambda project, created with [`aws-serverless-java-container`](https://github.com/aws/serverless-java-container).
 
 The starter project defines a simple `/ping` resource that can accept `GET` requests with its tests.
 
@@ -13,8 +13,8 @@ The project folder also includes a `template.yml` file. You can use this [SAM](h
 ## Building the project
 You can use the SAM CLI to quickly build the project
 ```bash
-$ mvn archetype:generate -DartifactId=SpringBootAwsServerless -DarchetypeGroupId=com.amazonaws.serverless.archetypes -DarchetypeArtifactId=aws-serverless-jersey-archetype -DarchetypeVersion=2.1.5 -DgroupId=org.example -Dversion=1.0-SNAPSHOT -Dinteractive=false
-$ cd SpringBootAwsServerless
+$ mvn archetype:generate -DartifactId=springBootJavaAwsLambda -DarchetypeGroupId=com.amazonaws.serverless.archetypes -DarchetypeArtifactId=aws-serverless-jersey-archetype -DarchetypeVersion=2.1.5 -DgroupId=org.example -Dversion=1.0-SNAPSHOT -Dinteractive=false
+$ cd springBootJavaAwsLambda
 $ sam build
 Building resource 'SpringBootAwsServerlessFunction'
 Running JavaGradleWorkflow:GradleBuild
@@ -67,7 +67,7 @@ Once the deployment is completed, the SAM CLI will print out the stack's outputs
 -------------------------------------------------------------------------------------------------------------
 OutputKey-Description                        OutputValue
 -------------------------------------------------------------------------------------------------------------
-SpringBootAwsServerlessApi - URL for application            https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/pets
+springBootJavaAwsLambdaApi - URL for application            https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/pets
 -------------------------------------------------------------------------------------------------------------
 ```
 
