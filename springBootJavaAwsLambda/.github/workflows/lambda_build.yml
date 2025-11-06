@@ -1,9 +1,11 @@
-name: Lambda Deploy from main
+name: Lambda build
 
 on:
   workflow_dispatch:
   push:
     branches:
+      - feature/**
+      - root/**
       - main
 
 permissions:
@@ -46,24 +48,3 @@ jobs:
 
       - name: Verify AWS CLI
         run: aws --version
-
-      - name: Deploy ZIP to Lambda
-        run: |
-          set -euo pipefail
-          ZIP_FILE="$(ls -t target/*.zip | head -n1)"
-          echo "Deploying $ZIP_FILE to Lambda function ${LAMBDA_FUNCTION_NAME} in ${AWS_REGION}"
-          aws lambda update-function-code \
-            --function-name "${LAMBDA_FUNCTION_NAME}" \
-            --zip-file "fileb://${ZIP_FILE}" \
-            --region "${AWS_REGION}"
-
-      - name: Wait for update to complete
-        run: |
-          aws lambda wait function-updated \
-            --function-name "${LAMBDA_FUNCTION_NAME}" \
-            --region "${AWS_REGION}"
-          aws lambda get-function \
-            --function-name "${LAMBDA_FUNCTION_NAME}" \
-            --region "${AWS_REGION}" \
-            --query 'Configuration.[FunctionName,LastModified,Version,Runtime]' \
-            --output table
