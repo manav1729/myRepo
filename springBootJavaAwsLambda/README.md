@@ -16,7 +16,7 @@ You can use the SAM CLI to quickly build the project
 $ mvn archetype:generate -DartifactId=springBootJavaAwsLambda -DarchetypeGroupId=com.amazonaws.serverless.archetypes -DarchetypeArtifactId=aws-serverless-jersey-archetype -DarchetypeVersion=2.1.5 -DgroupId=org.example -Dversion=1.0-SNAPSHOT -Dinteractive=false
 $ cd springBootJavaAwsLambda
 $ sam build
-Building resource 'SpringBootAwsServerlessFunction'
+Building resource 'springBootJavaAwsLambdaFunction'
 Running JavaGradleWorkflow:GradleBuild
 Running JavaGradleWorkflow:CopyArtifacts
 
