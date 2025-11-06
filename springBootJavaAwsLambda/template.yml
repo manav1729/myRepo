@@ -1,12 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: AWS Serverless Spring Boot 2 API - org.example::SpringBootAwsServerless
+Description: AWS Serverless Spring Boot 3 API - org.example::springBootJavaAwsLambda
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
 
 Resources:
-  SpringBootAwsServerlessFunction:
+  springBootJavaAwsLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: org.example.StreamLambdaHandler::handleRequest
@@ -23,8 +23,8 @@ Resources:
             Method: any
 
 Outputs:
-  SpringBootAwsServerlessApi:
+  springBootJavaAwsLambdaApi:
     Description: URL for application
     Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
     Export:
-      Name: SpringBootAwsServerlessApi
+      Name: springBootJavaAwsLambdaApi
